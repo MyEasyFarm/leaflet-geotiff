@@ -9,7 +9,7 @@
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     var L = require('leaflet');
-    var GeoTIFF = require('geotiff');
+    var GeoTIFF = require('@myeasyfarm/geotiff');
 }
 
 (function () {
