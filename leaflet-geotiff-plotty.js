@@ -2,7 +2,7 @@
 // https://github.com/santilland/plotty
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-	var L = require('leaflet-geotiff');
+	var L = require('@myeasyfarm/leaflet-geotiff');
 	var plotty = require('plotty');
 }
 
@@ -21,9 +21,9 @@ L.LeafletGeotiff.Plotty = L.LeafletGeotiffRenderer.extend({
 			throw new Error("plotty not defined");
 		}
 		this.name = "Plotty";
-		
+
         L.setOptions(this, options);
-		
+
 		this._preLoadColorScale();
 	},
 
@@ -44,34 +44,34 @@ L.LeafletGeotiff.Plotty = L.LeafletGeotiffRenderer.extend({
             canvas: canvas,
 			data: [0],
             width: 1, height: 1,
-            domain: [this.options.displayMin, this.options.displayMax], 
+            domain: [this.options.displayMin, this.options.displayMax],
             colorScale: this.options.colorScale,
             clampLow: this.options.clampLow,
             clampHigh: this.options.clampHigh,
         });
-        this.colorScaleData = plot.colorScaleCanvas.toDataURL();            
+        this.colorScaleData = plot.colorScaleCanvas.toDataURL();
     },
-	
+
 	render: function(raster, canvas, ctx, args) {
 		var plottyCanvas = document.createElement("canvas");
 		var plot = new plotty.plot({
 			data: raster.data,
 			width: raster.width, height: raster.height,
-			domain: [this.options.displayMin, this.options.displayMax], 
+			domain: [this.options.displayMin, this.options.displayMax],
 			colorScale: this.options.colorScale,
 			clampLow: this.options.clampLow,
 			clampHigh: this.options.clampHigh,
 			canvas: plottyCanvas,
 			useWebGL: false
 		});
-		plot.setNoDataValue(-9999); 
+		plot.setNoDataValue(-9999);
 		plot.render();
 
 		this.colorScaleData = plot.colorScaleCanvas.toDataURL();
 
 		var rasterImageData = plottyCanvas.getContext("2d").getImageData(0, 0, plottyCanvas.width, plottyCanvas.height);
 		var imageData = this.parent.transform(rasterImageData, args);
-		ctx.putImageData(imageData, args.xStart, args.yStart); 
+		ctx.putImageData(imageData, args.xStart, args.yStart);
 	}
 
 });

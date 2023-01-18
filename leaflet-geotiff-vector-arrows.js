@@ -1,5 +1,5 @@
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-	var L = require('leaflet-geotiff');
+	var L = require('@myeasyfarm/leaflet-geotiff');
 }
 
 L.LeafletGeotiff.VectorArrows = L.LeafletGeotiffRenderer.extend({
@@ -17,11 +17,11 @@ L.LeafletGeotiff.VectorArrows = L.LeafletGeotiffRenderer.extend({
         this.options.colorScale = colorScale;
         this.parent._reset();
     },
-	
+
 	render: function(raster, canvas, ctx, args) {
 		var arrowSize = this.options.arrowSize;
 		var gridPxelSize = (args.rasterPixelBounds.max.x - args.rasterPixelBounds.min.x) / raster.width;
-		var stride = Math.max(1,Math.floor(1.2*arrowSize/gridPxelSize)); 
+		var stride = Math.max(1,Math.floor(1.2*arrowSize/gridPxelSize));
 
 		for (var y=0;y<raster.height;y=y+stride) {
 			for (var x=0;x<raster.width;x=x+stride) {
