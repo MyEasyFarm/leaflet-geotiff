@@ -1,7 +1,7 @@
 {
 	"name": "@myeasyfarm/leaflet-geotiff",
 	"description": "A LeafletJS plugin for displaying geoTIFF raster data.",
-	"version": "0.2.12-1",
+	"version": "0.3.0",
 	"license": "MIT",
 	"author": "Stuart Matthews",
 	"contributors": [
@@ -9,8 +9,8 @@
 	],
 	"main": "leaflet-geotiff.js",
 	"dependencies": {
-		"leaflet": "^1.0.0",
-		"@myeasyfarm/geotiff": "^1.0.0-beta.6"
+		"geotiff": "^2.0.7",
+		"leaflet": "^1.0.0"
 	},
 	"optionalDependencies": {
 		"plotty": "^0.2.0"
