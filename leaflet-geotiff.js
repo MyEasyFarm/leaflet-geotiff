@@ -18,7 +18,7 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     } catch (e) {
         var ImageDataPolyfill = function ImageDataPolyfill() {
             var args = [].concat(Array.prototype.slice.call(arguments)),
-                data = void 0;
+              data = void 0;
 
             if (args.length < 2) {
                 throw new TypeError('Failed to construct "ImageData": 2 arguments required, but only ' + args.length + ' present.');
@@ -37,10 +37,10 @@ if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
             }
 
             var width = args[0],
-                height = args[1],
-                canvas = document.createElement('canvas'),
-                ctx = canvas.getContext('2d'),
-                imageData = ctx.createImageData(width, height);
+              height = args[1],
+              canvas = document.createElement('canvas'),
+              ctx = canvas.getContext('2d'),
+              imageData = ctx.createImageData(width, height);
 
             if (data) imageData.data.set(data);
             return imageData;
@@ -227,31 +227,31 @@ L.LeafletGeotiff = L.ImageOverlay.extend({
     _animateZoom: function (e) {
         if (L.version >= "1.0") {
             var scale = this._map.getZoomScale(e.zoom),
-                offset = this._map._latLngBoundsToNewLayerBounds(this._map.getBounds(), e.zoom, e.center).min;
+              offset = this._map._latLngBoundsToNewLayerBounds(this._map.getBounds(), e.zoom, e.center).min;
             L.DomUtil.setTransform(this._image, offset, scale);
         } else {
             var scale = this._map.getZoomScale(e.zoom),
-                nw = this._map.getBounds().getNorthWest(),
-                se = this._map.getBounds().getSouthEast(),
-                topLeft = this._map._latLngToNewLayerPoint(nw, e.zoom, e.center),
-                size = this._map._latLngToNewLayerPoint(se, e.zoom, e.center)._subtract(topLeft);
+              nw = this._map.getBounds().getNorthWest(),
+              se = this._map.getBounds().getSouthEast(),
+              topLeft = this._map._latLngToNewLayerPoint(nw, e.zoom, e.center),
+              size = this._map._latLngToNewLayerPoint(se, e.zoom, e.center)._subtract(topLeft);
             this._image.style[L.DomUtil.TRANSFORM] =
-                L.DomUtil.getTranslateString(topLeft) + ' scale(' + scale + ') ';
+              L.DomUtil.getTranslateString(topLeft) + ' scale(' + scale + ') ';
         }
     },
     _reset: function () {
         if (this.hasOwnProperty('_map') && this._map) {
             if (this._rasterBounds) {
-                topLeft = this._map.latLngToLayerPoint(this._map.getBounds().getNorthWest()),
-                    size = this._map.latLngToLayerPoint(this._map.getBounds().getSouthEast())._subtract(topLeft);
+                var topLeft = this._map.latLngToLayerPoint(this._map.getBounds().getNorthWest()),
+                  size = this._map.latLngToLayerPoint(this._map.getBounds().getSouthEast())._subtract(topLeft);
 
                 L.DomUtil.setPosition(this._image, topLeft);
                 this._image.style.width  = size.x + 'px';
                 this._image.style.height = size.y + 'px';
 
                 this._drawImage();
-            };
-        };
+            }
+        }
     },
     setClip: function(clipLatLngs) {
         this.options.clip = clipLatLngs;
@@ -271,7 +271,7 @@ L.LeafletGeotiff = L.ImageOverlay.extend({
             const clip = this.options.clip[i];
             for (var p = 0; p < clip.length; p++) {
                 var mercPoint = this._map.latLngToLayerPoint(clip[p]),
-                    pixel = L.point(mercPoint.x - topLeft.x, mercPoint.y - topLeft.y);
+                  pixel = L.point(mercPoint.x - topLeft.x, mercPoint.y - topLeft.y);
                 pixelClipPoints.push(pixel);
             }
             this._pixelClipPoints = pixelClipPoints;
@@ -282,9 +282,9 @@ L.LeafletGeotiff = L.ImageOverlay.extend({
 
     _drawImage: function () {
         if (this.raster.hasOwnProperty('data')) {
-            var args = {};
-            topLeft = this._map.latLngToLayerPoint(this._map.getBounds().getNorthWest()),
-                size = this._map.latLngToLayerPoint(this._map.getBounds().getSouthEast())._subtract(topLeft);
+            var args = {},
+              topLeft = this._map.latLngToLayerPoint(this._map.getBounds().getNorthWest()),
+              size = this._map.latLngToLayerPoint(this._map.getBounds().getSouthEast())._subtract(topLeft);
             args.rasterPixelBounds = L.bounds(this._map.latLngToContainerPoint(this._rasterBounds.getNorthWest()),this._map.latLngToContainerPoint(this._rasterBounds.getSouthEast()));
             args.xStart = (args.rasterPixelBounds.min.x>0 ? args.rasterPixelBounds.min.x : 0);
             args.xFinish = (args.rasterPixelBounds.max.x<size.x ? args.rasterPixelBounds.max.x : size.x);
